@@ -77,6 +77,7 @@ export function Hero() {
           <Reveal delay={150}>
             <div className="relative">
               <PlaceholderImage label="foto institucional — família / escritório" aspect="aspect-[4/3]" />
+              <img src="/images/section1.jpg" alt="foto institucional — família / escritório" className="absolute inset-0 h-full w-full object-cover rounded-2xl" />
               <div className="absolute -bottom-[18px] -left-2 hidden max-w-[calc(100%+8px)] gap-[18px] rounded-2xl border border-ink-200 bg-white p-4 px-5 shadow-stats sm:flex">
                 <HeroStats />
               </div>

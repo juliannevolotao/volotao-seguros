@@ -48,7 +48,8 @@ export function Header() {
           }}
           className="flex items-center gap-2.5"
         >
-          <Logo />
+          {/* <Logo /> */}
+          <img src="/images/logo.png" alt="Volotão Seguros Logo" className="w-48" />
         </a>
 
         {/* Desktop nav */}
