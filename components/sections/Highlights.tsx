@@ -21,7 +21,7 @@ const HIGHLIGHTS: Highlight[] = [
     title: "Consórcio",
     description: "Conquiste seu carro ou imóvel sem juros, com parcelas que cabem no seu planejamento.",
     icon: "cycle",
-    image: "foto — chaves / carro novo",
+    image: "consorcio",
     variant: "primary",
   },
   {
@@ -29,7 +29,7 @@ const HIGHLIGHTS: Highlight[] = [
     title: "Seguro Veículo",
     description: "Colisão, roubo, terceiros, carro reserva e assistência 24h, com a melhor cotação entre as seguradoras.",
     icon: "car",
-    image: "foto — carro na estrada",
+    image: "segurocarro",
     variant: "default",
   },
   {
@@ -37,7 +37,7 @@ const HIGHLIGHTS: Highlight[] = [
     title: "Seguro Saúde",
     description: "Planos individuais, familiares e empresariais com a rede credenciada certa para o seu perfil.",
     icon: "health",
-    image: "foto — família / consulta médica",
+    image: "segurosaude",
     variant: "default",
   },
 ];
@@ -61,6 +61,7 @@ function HighlightCard({ item }: { item: Highlight }) {
           tone={isPrimary ? "dark" : "light"}
           rounded="rounded-none"
         />
+        <img src={`/images/${item.image}.jpg`} alt={item.image} className="absolute inset-0 h-full w-full object-cover rounded-2xl" />
         <span
           className={`absolute -bottom-[26px] left-[clamp(20px,2.4vw,26px)] flex h-[52px] w-[52px] items-center justify-center rounded-[13px] border ${
             isPrimary
