@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  html { scroll-behavior:smooth; }
+  section, footer { scroll-margin-top:86px; }
+  body { margin:0; background:#ffffff; font-family:'Plus Jakarta Sans', system-ui, sans-serif; color:#16202B; -webkit-font-smoothing:antialiased; }
+  * { box-sizing:border-box; }
+  a { color:#1B5FAE; text-decoration:none; }
+  a:hover { color:#0A2A54; }
+  input, select, textarea, button { font-family:inherit; }
+  @keyframes volPop { from { opacity:0; transform:translateY(12px) scale(.98); } to { opacity:1; transform:none; } }
+  @keyframes volReveal { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:none; } }
+  @keyframes volFade { from { opacity:0; } to { opacity:1; } }
+</style>
+</helmet>
+
+<div style="width:100%; overflow-x:hidden;">
+
+  <header style="position:sticky; top:0; z-index:50; background:rgba(255,255,255,.94); backdrop-filter:blur(10px); border-bottom:1px solid #E3E8EF; transition:box-shadow .25s ease;" style-hover="">
+    <div style="max-width:1180px; margin:0 auto; padding:12px 20px; display:flex; align-items:center; justify-content:space-between; gap:16px;">
+      <a href="#topo" style="display:flex; align-items:center; gap:10px; color:inherit;">
+        <svg width="34" height="38" viewBox="0 0 34 38" aria-hidden="true">
+          <defs><linearGradient id="volShield" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0A2A54"></stop><stop offset="1" stop-color="#2E7FD4"></stop></linearGradient></defs>
+          <path d="M17 1.5 32 7v12.5C32 28 25.6 33.6 17 36.5 8.4 33.6 2 28 2 19.5V7z" fill="url(#volShield)"></path>
+          <path d="M10.5 14.5 17 26l6.5-11.5" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        <span style="display:flex; flex-direction:column; line-height:1;">
+          <span style="font-size:19px; font-weight:800; letter-spacing:-.02em; color:#2F3A45;">VOLOTÃO</span>
+          <span style="font-size:8.5px; font-weight:600; letter-spacing:.22em; color:#8A97A5; margin-top:4px;">CORRETORA DE SEGUROS</span>
+        </span>
+      </a>
+
+      <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+        <nav style="display:flex; align-items:center; gap:26px;">
+          <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="4">
+            <a href="{{ item.href }}" onClick="{{ item.onClick }}" style="position:relative; font-size:14.5px; font-weight:600; color:#3D4B59; padding:6px 0; transition:color .2s;" style-hover="color:#0A2A54;">
+              {{ item.label }}
+              <span style="{{ item.underline }}"></span>
+            </a>
+          </sc-for>
+          <a href="{{ waLink }}" target="_blank" rel="noopener" style="display:flex; align-items:center; gap:8px; background:#25D366; color:#08331A; font-size:14px; font-weight:700; padding:11px 18px; border-radius:10px; box-shadow:0 2px 8px rgba(37,211,102,.28);" style-hover="background:#1FBE5B; color:#062B15;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.7-4.8A8.5 8.5 0 1 1 21 11.5z"></path><path d="M8.8 9.2c.3 2.6 3.4 5.7 6 6l1.3-1.6 2 1-.4 1.7c-2.9.8-7.9-3-8.8-6.9l1.6-.7z"></path></svg>
+            Fale no WhatsApp
+          </a>
+        </nav>
+      </sc-if>
+
+      <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <a href="{{ waLink }}" target="_blank" rel="noopener" aria-label="Fale no WhatsApp" style="display:flex; align-items:center; justify-content:center; width:46px; height:46px; border-radius:12px; background:#25D366; color:#08331A;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.7-4.8A8.5 8.5 0 1 1 21 11.5z"></path><path d="M8.8 9.2c.3 2.6 3.4 5.7 6 6l1.3-1.6 2 1-.4 1.7c-2.9.8-7.9-3-8.8-6.9l1.6-.7z"></path></svg>
+          </a>
+          <button type="button" onClick="{{ toggleMenu }}" aria-label="Abrir menu" style="width:46px; height:46px; display:flex; align-items:center; justify-content:center; border:1px solid #E3E8EF; background:#fff; border-radius:12px; cursor:pointer; color:#2F3A45;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+          </button>
+        </div>
+      </sc-if>
+    </div>
+
+    <div aria-hidden="true" style="height:2px; background:transparent;">
+      <div style="{{ progressStyle }}"></div>
+    </div>
+
+    <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+      <nav style="border-top:1px solid #E3E8EF; background:#fff; padding:8px 20px 18px; display:flex; flex-direction:column;">
+        <a href="#servicos" onClick="{{ closeMenu }}" style="padding:14px 2px; font-size:16px; font-weight:600; color:#2F3A45; border-bottom:1px solid #F0F3F7;">Serviços</a>
+        <a href="#sobre" onClick="{{ closeMenu }}" style="padding:14px 2px; font-size:16px; font-weight:600; color:#2F3A45; border-bottom:1px solid #F0F3F7;">Sobre</a>
+        <a href="#seguradoras" onClick="{{ closeMenu }}" style="padding:14px 2px; font-size:16px; font-weight:600; color:#2F3A45; border-bottom:1px solid #F0F3F7;">Seguradoras Parceiras</a>
+        <a href="#contato" onClick="{{ closeMenu }}" style="padding:14px 2px; font-size:16px; font-weight:600; color:#2F3A45;">Contato</a>
+        <a href="#proposta" onClick="{{ closeMenu }}" style="margin-top:14px; text-align:center; background:#1B5FAE; color:#fff; font-weight:700; padding:15px; border-radius:12px;">Solicitar Proposta</a>
+      </nav>
+    </sc-if>
+  </header>
+
+  <section id="topo" style="background:linear-gradient(180deg,#F6F9FC 0%,#FFFFFF 100%); border-bottom:1px solid #EDF1F6;">
+    <div style="max-width:1180px; margin:0 auto; padding:clamp(40px,7vw,88px) 20px; display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:clamp(32px,5vw,64px); align-items:center;">
+      <div>
+        <span style="display:inline-flex; align-items:center; gap:9px; background:#EAF2FB; color:#0A2A54; border:1px solid #D3E3F5; font-size:12.5px; font-weight:700; letter-spacing:.08em; padding:8px 14px; border-radius:999px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4l7 3v5c0 4-3 6.5-7 8-4-1.5-7-4-7-8V7z"></path></svg>
+          +15 ANOS DE MERCADO
+        </span>
+        <h1 style="margin:22px 0 0; font-size:clamp(34px,5.4vw,56px); line-height:1.06; letter-spacing:-.03em; font-weight:800; color:#0F2138; text-wrap:pretty;">Mais de 15 anos protegendo o que é importante para você</h1>
+        <p style="margin:20px 0 0; font-size:clamp(16px,1.6vw,19px); line-height:1.6; color:#54626F; max-width:520px; text-wrap:pretty;">Consórcio, seguro de veículo e seguro saúde são o nosso forte — e o portfólio vai além, com soluções para casa, empresa e viagem. Atendimento próximo do primeiro contato ao acionamento do sinistro.</p>
+        <div style="{{ heroCtaStyle }}">
+          <a href="#proposta" style="{{ ctaPrimaryStyle }}" style-hover="background:#0A2A54; color:#fff;">
+            Solicitar Proposta
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"></path></svg>
+          </a>
+          <a href="{{ waLink }}" target="_blank" rel="noopener" style="{{ ctaSecondaryStyle }}" style-hover="background:#25D366; color:#08331A;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.7-4.8A8.5 8.5 0 1 1 21 11.5z"></path><path d="M8.8 9.2c.3 2.6 3.4 5.7 6 6l1.3-1.6 2 1-.4 1.7c-2.9.8-7.9-3-8.8-6.9l1.6-.7z"></path></svg>
+            Falar no WhatsApp
+          </a>
+        </div>
+        <sc-if value="{{ isNotPhone }}" hint-placeholder-val="{{ true }}">
+        <div style="{{ heroTrustStyle }}">
+          <span style="display:flex; align-items:center; gap:8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1B5FAE" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M20 6L9 17l-5-5"></path></svg>
+            Cotação em até 24h
+          </span>
+          <span style="display:flex; align-items:center; gap:8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1B5FAE" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M20 6L9 17l-5-5"></path></svg>
+            Atendimento humano
+          </span>
+          <span style="display:flex; align-items:center; gap:8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1B5FAE" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M20 6L9 17l-5-5"></path></svg>
+            Assessoria em sinistros
+          </span>
+        </div>
+        </sc-if>
+      </div>
+
+      <div style="position:relative;">
+        <div style="aspect-ratio:4/3; width:100%; border-radius:18px; border:1px solid #D8E3EF; background-color:#EDF3FA; background-image:repeating-linear-gradient(135deg,#E2ECF7 0 12px,#EDF3FA 12px 24px); display:flex; align-items:center; justify-content:center;">
+          <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12.5px; color:#5E7286; background:rgba(255,255,255,.9); padding:10px 14px; border-radius:8px; border:1px solid #D8E3EF; text-align:center;">foto institucional — família / escritório</span>
+        </div>
+        <div style="{{ heroStatsStyle }}">
+          <span style="display:flex; flex-direction:column;"><strong style="font-size:22px; color:#0A2A54;">+15</strong><span style="font-size:12px; color:#66727E; font-weight:600; line-height:1.3;">anos de<br>mercado</span></span>
+          <span style="width:1px; background:#E3E8EF;"></span>
+          <span style="display:flex; flex-direction:column;"><strong style="font-size:22px; color:#0A2A54;">80+</strong><span style="font-size:12px; color:#66727E; font-weight:600; line-height:1.3;">cotas<br>contempladas</span></span>
+          <span style="width:1px; background:#E3E8EF;"></span>
+          <span style="display:flex; flex-direction:column;"><strong style="font-size:22px; color:#0A2A54;">2 mil+</strong><span style="font-size:12px; color:#66727E; font-weight:600; line-height:1.3;">clientes<br>atendidos</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <sc-if value="{{ isPhone }}" hint-placeholder-val="{{ false }}">
+    <div style="background:linear-gradient(90deg,#215FAF 0%,#3E7CC9 100%); color:#FFFFFF; display:flex; gap:0; overflow-x:auto; scrollbar-width:none;">
+      <span style="flex:none; display:flex; align-items:center; gap:8px; padding:14px 18px; font-size:13px; font-weight:600; white-space:nowrap;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M20 6L9 17l-5-5"></path></svg>
+        Cotação em até 24h
+      </span>
+      <span style="flex:none; display:flex; align-items:center; gap:8px; padding:14px 18px; font-size:13px; font-weight:600; white-space:nowrap;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M20 6L9 17l-5-5"></path></svg>
+        Atendimento humano
+      </span>
+      <span style="flex:none; display:flex; align-items:center; gap:8px; padding:14px 18px 14px 18px; font-size:13px; font-weight:600; white-space:nowrap;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M20 6L9 17l-5-5"></path></svg>
+        Assessoria em sinistros
+      </span>
+    </div>
+  </sc-if>
+
+  <section style="max-width:1180px; margin:0 auto; padding:clamp(46px,6vw,72px) 20px 0; animation:volReveal linear both; animation-timeline:view(); animation-range:entry 8% cover 26%;">
+    <div ref="{{ carouselRef }}" onScroll="{{ onCarouselScroll }}" style="{{ destaquesStyle }}">
+      <div style="position:relative; overflow:hidden; border-radius:18px; background:linear-gradient(135deg,#0A2A54 0%,#1B5FAE 100%); color:#fff; display:flex; flex-direction:column; scroll-snap-align:center;">
+        <div style="position:relative; aspect-ratio:16/9; width:100%; background-color:#0E3468; background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.07) 0 12px,rgba(255,255,255,.02) 12px 24px); display:flex; align-items:center; justify-content:center;">
+          <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:11.5px; color:#CFE0F2; background:rgba(10,42,84,.7); border:1px solid rgba(255,255,255,.18); padding:8px 12px; border-radius:7px;">foto — chaves / carro novo</span>
+          <span style="position:absolute; left:clamp(20px,2.4vw,26px); bottom:-26px; width:52px; height:52px; border-radius:13px; background:#0A2A54; border:1px solid rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12a7 7 0 1 1-2-4.9"></path><path d="M19 6v4h-4"></path></svg>
+          </span>
+        </div>
+        <div style="padding:42px clamp(22px,2.6vw,28px) clamp(24px,2.6vw,30px); display:flex; flex-direction:column; flex:1;">
+          <h3 style="margin:0; font-size:clamp(21px,2.2vw,26px); font-weight:800; letter-spacing:-.02em;">Consórcio</h3>
+          <p style="margin:10px 0 0; font-size:15.5px; line-height:1.6; color:#CFE0F2;">Conquiste seu carro ou imóvel sem juros, com parcelas que cabem no seu planejamento.</p>
+          <button type="button" onClick="{{ openConsorcio }}" style="margin-top:auto; align-self:flex-start; background:#fff; color:#0A2A54; border:none; font-size:15px; font-weight:700; padding:13px 22px; border-radius:11px; cursor:pointer; margin-top:22px;" style-hover="background:#EAF2FB;">Saiba mais</button>
+        </div>
+      </div>
+      <div style="position:relative; overflow:hidden; border-radius:18px; background:#fff; border:1px solid #E3E8EF; display:flex; flex-direction:column; scroll-snap-align:center;">
+        <div style="position:relative; aspect-ratio:16/9; width:100%; background-color:#EDF3FA; background-image:repeating-linear-gradient(135deg,#E2ECF7 0 12px,#EDF3FA 12px 24px); display:flex; align-items:center; justify-content:center;">
+          <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:11.5px; color:#5E7286; background:rgba(255,255,255,.9); border:1px solid #D8E3EF; padding:8px 12px; border-radius:7px;">foto — carro na estrada</span>
+          <span style="position:absolute; left:clamp(20px,2.4vw,26px); bottom:-26px; width:52px; height:52px; border-radius:13px; background:#fff; border:1px solid #E3E8EF; display:flex; align-items:center; justify-content:center;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1B5FAE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13h16v4h-2.2M9.8 17H6.2M4 17v-4l1.9-4.6A2 2 0 0 1 7.7 7h8.6a2 2 0 0 1 1.8 1.4L20 13M8 16.6a1.4 1.4 0 1 0 0-.1zM17.6 16.6a1.4 1.4 0 1 0 0-.1z"></path></svg>
+          </span>
+        </div>
+        <div style="padding:42px clamp(22px,2.6vw,28px) clamp(24px,2.6vw,30px); display:flex; flex-direction:column; flex:1;">
+          <h3 style="margin:0; font-size:clamp(21px,2.2vw,26px); font-weight:800; letter-spacing:-.02em; color:#0F2138;">Seguro Veículo</h3>
+          <p style="margin:10px 0 0; font-size:15.5px; line-height:1.6; color:#54626F;">Colisão, roubo, terceiros, carro reserva e assistência 24h, com a melhor cotação entre as seguradoras.</p>
+          <button type="button" onClick="{{ openAuto }}" style="align-self:flex-start; background:#1B5FAE; color:#fff; border:none; font-size:15px; font-weight:700; padding:13px 22px; border-radius:11px; cursor:pointer; margin-top:22px;" style-hover="background:#0A2A54;">Saiba mais</button>
+        </div>
+      </div>
+      <div style="position:relative; overflow:hidden; border-radius:18px; background:#fff; border:1px solid #E3E8EF; display:flex; flex-direction:column; scroll-snap-align:center;">
+        <div style="position:relative; aspect-ratio:16/9; width:100%; background-color:#EDF3FA; background-image:repeating-linear-gradient(135deg,#E2ECF7 0 12px,#EDF3FA 12px 24px); display:flex; align-items:center; justify-content:center;">
+          <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:11.5px; color:#5E7286; background:rgba(255,255,255,.9); border:1px solid #D8E3EF; padding:8px 12px; border-radius:7px;">foto — família / consulta médica</span>
+          <span style="position:absolute; left:clamp(20px,2.4vw,26px); bottom:-26px; width:52px; height:52px; border-radius:13px; background:#fff; border:1px solid #E3E8EF; display:flex; align-items:center; justify-content:center;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1B5FAE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4.5l7 2.8v4.7c0 3.8-2.8 6.3-7 7.5-4.2-1.2-7-3.7-7-7.5V7.3zM12 9.5v5M9.5 12h5"></path></svg>
+          </span>
+        </div>
+        <div style="padding:42px clamp(22px,2.6vw,28px) clamp(24px,2.6vw,30px); display:flex; flex-direction:column; flex:1;">
+          <h3 style="margin:0; font-size:clamp(21px,2.2vw,26px); font-weight:800; letter-spacing:-.02em; color:#0F2138;">Seguro Saúde</h3>
+          <p style="margin:10px 0 0; font-size:15.5px; line-height:1.6; color:#54626F;">Planos individuais, familiares e empresariais com a rede credenciada certa para o seu perfil.</p>
+          <button type="button" onClick="{{ openSaude }}" style="align-self:flex-start; background:#1B5FAE; color:#fff; border:none; font-size:15px; font-weight:700; padding:13px 22px; border-radius:11px; cursor:pointer; margin-top:22px;" style-hover="background:#0A2A54;">Saiba mais</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex; justify-content:center; gap:8px; padding:18px 20px 0;">
+      <sc-for list="{{ dots }}" as="dot" hint-placeholder-count="3">
+        <button type="button" onClick="{{ dot.onClick }}" aria-label="{{ dot.label }}" style="{{ dot.style }}"></button>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <section id="servicos" style="max-width:1180px; margin:0 auto; padding:clamp(52px,7vw,88px) 20px; animation:volReveal linear both; animation-timeline:view(); animation-range:entry 8% cover 26%;">
+    <span style="font-size:12.5px; font-weight:700; letter-spacing:.16em; color:#1B5FAE;">CATÁLOGO DE SERVIÇOS</span>
+    <h2 style="margin:14px 0 0; font-size:clamp(28px,3.6vw,40px); font-weight:800; letter-spacing:-.025em; color:#0F2138;">Encontre a proteção certa</h2>
+    <p style="margin:12px 0 0; font-size:16.5px; line-height:1.6; color:#54626F; max-width:560px;">Busque pelo nome ou navegue pelas categorias. Clique em um serviço para ver os detalhes e solicitar sua proposta.</p>
+
+    <div style="margin-top:30px; display:flex; align-items:center; gap:12px; background:#fff; border:1px solid #DCE3EC; border-radius:14px; padding:14px 18px; box-shadow:0 2px 10px rgba(15,33,56,.04);">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A97A5" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4 4"></path></svg>
+      <input type="search" value="{{ query }}" onChange="{{ onQuery }}" placeholder="Buscar por nome ou categoria..." aria-label="Buscar serviços" style="flex:1; min-width:0; border:none; outline:none; font-size:16px; color:#16202B; background:transparent;">
+    </div>
+
+    <div style="{{ chipsRowStyle }}">
+      <sc-for list="{{ chips }}" as="chip" hint-placeholder-count="9">
+        <button type="button" onClick="{{ chip.onClick }}" style="{{ chip.style }}">{{ chip.label }}</button>
+      </sc-for>
+    </div>
+
+    <div style="margin-top:28px; display:grid; grid-template-columns:repeat(auto-fill,minmax(min(215px,calc(50% - 7px)),1fr)); gap:14px;">
+      <sc-for list="{{ shown }}" as="s" hint-placeholder-count="12">
+        <button type="button" onClick="{{ s.onClick }}" style="text-align:left; cursor:pointer; background:#fff; border:1px solid #E3E8EF; border-radius:15px; padding:clamp(14px,3vw,20px); display:flex; flex-direction:column; gap:clamp(10px,2vw,14px); min-height:126px; transition:border-color .15s, box-shadow .15s, transform .15s;" style-hover="border-color:#1B5FAE; box-shadow:0 10px 24px rgba(15,33,56,.09); transform:translateY(-2px);">
+          <span style="width:42px; height:42px; border-radius:11px; background:#EAF2FB; display:flex; align-items:center; justify-content:center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1B5FAE" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="{{ s.d }}"></path></svg>
+          </span>
+          <span style="display:flex; flex-direction:column; gap:5px;">
+            <span style="font-size:16px; font-weight:700; color:#16202B; letter-spacing:-.01em;">{{ s.name }}</span>
+            <span style="font-size:12.5px; font-weight:600; color:#8A97A5;">{{ s.cat }}</span>
+          </span>
+        </button>
+      </sc-for>
+    </div>
+
+    <sc-if value="{{ empty }}" hint-placeholder-val="{{ false }}">
+      <p style="margin:36px 0 0; text-align:center; font-size:16px; color:#66727E;">Nenhum serviço encontrado. Fale com a gente no WhatsApp — atendemos demandas sob medida.</p>
+    </sc-if>
+  </section>
+
+  <section id="seguradoras" style="background:#F5F7FA; border-top:1px solid #EDF1F6; border-bottom:1px solid #EDF1F6; animation:volReveal linear both; animation-timeline:view(); animation-range:entry 8% cover 26%;">
+    <div style="max-width:1180px; margin:0 auto; padding:clamp(46px,6vw,76px) 20px; text-align:center;">
+      <h2 style="margin:0; font-size:clamp(24px,3vw,34px); font-weight:800; letter-spacing:-.025em; color:#0F2138;">Trabalhamos com as melhores seguradoras do mercado</h2>
+      <p style="margin:12px auto 0; font-size:16px; color:#54626F; max-width:560px;">Comparamos coberturas e preços entre as maiores companhias do país para indicar a melhor opção para o seu perfil.</p>
+      <div style="margin-top:34px; display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:12px;">
+        <sc-for list="{{ insurers }}" as="ins" hint-placeholder-count="8">
+          <div style="height:80px; background:#fff; border:1px solid #E3E8EF; border-radius:12px; display:flex; align-items:center; justify-content:center; padding:0 14px; font-size:14.5px; font-weight:700; letter-spacing:.02em; color:#7C8998; text-align:center;">{{ ins }}</div>
+        </sc-for>
+      </div>
+      <p style="margin:20px 0 0; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12px; color:#8A97A5;">substituir pelos logos oficiais das seguradoras parceiras</p>
+    </div>
+  </section>
+
+  <section id="sobre" style="max-width:1180px; margin:0 auto; padding:clamp(52px,7vw,88px) 20px; animation:volReveal linear both; animation-timeline:view(); animation-range:entry 8% cover 26%;">
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:clamp(30px,5vw,60px); align-items:center;">
+      <div>
+        <span style="font-size:12.5px; font-weight:700; letter-spacing:.16em; color:#1B5FAE;">SOBRE A VOLOTÃO</span>
+        <h2 style="margin:14px 0 0; font-size:clamp(28px,3.6vw,40px); font-weight:800; letter-spacing:-.025em; color:#0F2138; text-wrap:pretty;">Uma corretora que atende pessoas, não apólices</h2>
+        <p style="margin:18px 0 0; font-size:16.5px; line-height:1.7; color:#54626F;">São mais de 15 anos no mercado de seguros construindo relações de confiança com famílias e empresas. Cuidamos de todo o processo: entendemos sua necessidade, comparamos as seguradoras, explicamos cada cobertura em linguagem simples e acompanhamos você no momento em que mais importa — o do sinistro.</p>
+        <div style="display:flex; flex-direction:column; gap:14px; margin-top:26px;">
+          <span style="display:flex; gap:12px; align-items:flex-start;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B5FAE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex:none;"><path d="M20 6L9 17l-5-5"></path></svg>
+            <span style="font-size:15.5px; color:#3D4B59; line-height:1.5;"><strong style="color:#16202B;">Atendimento personalizado.</strong> Você fala sempre com o mesmo corretor.</span>
+          </span>
+          <span style="display:flex; gap:12px; align-items:flex-start;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B5FAE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex:none;"><path d="M20 6L9 17l-5-5"></path></svg>
+            <span style="font-size:15.5px; color:#3D4B59; line-height:1.5;"><strong style="color:#16202B;">Agilidade.</strong> Cotações comparativas em até 24 horas úteis.</span>
+          </span>
+          <span style="display:flex; gap:12px; align-items:flex-start;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B5FAE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex:none;"><path d="M20 6L9 17l-5-5"></path></svg>
+            <span style="font-size:15.5px; color:#3D4B59; line-height:1.5;"><strong style="color:#16202B;">Transparência.</strong> Coberturas e exclusões explicadas antes da contratação.</span>
+          </span>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:14px;">
+        <div style="background:#F5F7FA; border:1px solid #E3E8EF; border-radius:15px; padding:26px;">
+          <strong style="display:block; font-size:34px; font-weight:800; color:#0A2A54; letter-spacing:-.03em;">15+</strong>
+          <span style="display:block; margin-top:6px; font-size:14px; font-weight:600; color:#66727E;">anos de mercado</span>
+        </div>
+        <div style="background:#F5F7FA; border:1px solid #E3E8EF; border-radius:15px; padding:26px;">
+          <strong style="display:block; font-size:34px; font-weight:800; color:#0A2A54; letter-spacing:-.03em;">2.000+</strong>
+          <span style="display:block; margin-top:6px; font-size:14px; font-weight:600; color:#66727E;">clientes atendidos</span>
+        </div>
+        <div style="background:#F5F7FA; border:1px solid #E3E8EF; border-radius:15px; padding:26px;">
+          <strong style="display:block; font-size:34px; font-weight:800; color:#0A2A54; letter-spacing:-.03em;">20+</strong>
+          <span style="display:block; margin-top:6px; font-size:14px; font-weight:600; color:#66727E;">seguradoras parceiras</span>
+        </div>
+        <div style="background:#F5F7FA; border:1px solid #E3E8EF; border-radius:15px; padding:26px;">
+          <strong style="display:block; font-size:34px; font-weight:800; color:#0A2A54; letter-spacing:-.03em;">24h</strong>
+          <span style="display:block; margin-top:6px; font-size:14px; font-weight:600; color:#66727E;">para retorno da cotação</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="proposta" style="background:linear-gradient(160deg,#0A2A54 0%,#123B72 100%); animation:volReveal linear both; animation-timeline:view(); animation-range:entry 8% cover 26%;">
+    <div style="max-width:1180px; margin:0 auto; padding:clamp(48px,6vw,84px) 20px; display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:clamp(32px,5vw,60px);">
+      <div>
+        <h2 style="margin:0; font-size:clamp(28px,3.6vw,40px); font-weight:800; letter-spacing:-.025em; color:#fff; text-wrap:pretty;">Solicitar proposta</h2>
+        <p style="margin:16px 0 0; font-size:16.5px; line-height:1.7; color:#C6D9EF; max-width:440px;">Preencha os dados e retornamos com uma cotação comparativa. Se preferir, fale agora mesmo com um corretor pelo WhatsApp — é o nosso canal mais rápido.</p>
+        <a href="{{ waLink }}" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:12px; margin-top:26px; background:#25D366; color:#08331A; font-size:16.5px; font-weight:700; padding:18px 26px; border-radius:13px;" style-hover="background:#1FBE5B; color:#062B15;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.7-4.8A8.5 8.5 0 1 1 21 11.5z"></path><path d="M8.8 9.2c.3 2.6 3.4 5.7 6 6l1.3-1.6 2 1-.4 1.7c-2.9.8-7.9-3-8.8-6.9l1.6-.7z"></path></svg>
+          Prefiro falar no WhatsApp agora
+        </a>
+        <p style="margin:22px 0 0; font-size:13.5px; color:#9FBBDA;">Atendimento de segunda a sexta, das 9h às 18h.</p>
+      </div>
+
+      <form onSubmit="{{ onSubmit }}" style="background:#fff; border-radius:18px; padding:clamp(22px,3vw,32px); display:flex; flex-direction:column; gap:16px; box-shadow:0 20px 50px rgba(5,20,40,.25);">
+        <label style="display:flex; flex-direction:column; gap:7px;">
+          <span style="font-size:13.5px; font-weight:700; color:#3D4B59;">Nome</span>
+          <input name="nome" required placeholder="Seu nome completo" style="border:1px solid #DCE3EC; border-radius:11px; padding:14px 15px; font-size:15.5px; color:#16202B; outline:none;" style-focus="border-color:#1B5FAE; box-shadow:0 0 0 3px rgba(27,95,174,.14);">
+        </label>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:16px;">
+          <label style="display:flex; flex-direction:column; gap:7px;">
+            <span style="font-size:13.5px; font-weight:700; color:#3D4B59;">Telefone / WhatsApp</span>
+            <input name="telefone" required type="tel" placeholder="(00) 00000-0000" style="border:1px solid #DCE3EC; border-radius:11px; padding:14px 15px; font-size:15.5px; color:#16202B; outline:none;" style-focus="border-color:#1B5FAE; box-shadow:0 0 0 3px rgba(27,95,174,.14);">
+          </label>
+          <label style="display:flex; flex-direction:column; gap:7px;">
+            <span style="font-size:13.5px; font-weight:700; color:#3D4B59;">E-mail</span>
+            <input name="email" required type="email" placeholder="voce@email.com" style="border:1px solid #DCE3EC; border-radius:11px; padding:14px 15px; font-size:15.5px; color:#16202B; outline:none;" style-focus="border-color:#1B5FAE; box-shadow:0 0 0 3px rgba(27,95,174,.14);">
+          </label>
+        </div>
+        <label style="display:flex; flex-direction:column; gap:7px;">
+          <span style="font-size:13.5px; font-weight:700; color:#3D4B59;">Tipo de seguro</span>
+          <select name="servico" value="{{ formService }}" onChange="{{ onService }}" style="border:1px solid #DCE3EC; border-radius:11px; padding:14px 15px; font-size:15.5px; color:#16202B; background:#fff; outline:none;" style-focus="border-color:#1B5FAE; box-shadow:0 0 0 3px rgba(27,95,174,.14);">
+            <option value="">Selecione uma opção</option>
+            <sc-for list="{{ allNames }}" as="n" hint-placeholder-count="6">
+              <option value="{{ n }}">{{ n }}</option>
+            </sc-for>
+          </select>
+        </label>
+        <label style="display:flex; flex-direction:column; gap:7px;">
+          <span style="font-size:13.5px; font-weight:700; color:#3D4B59;">Mensagem</span>
+          <textarea name="mensagem" rows="4" placeholder="Conte brevemente o que você precisa" style="border:1px solid #DCE3EC; border-radius:11px; padding:14px 15px; font-size:15.5px; color:#16202B; outline:none; resize:vertical;" style-focus="border-color:#1B5FAE; box-shadow:0 0 0 3px rgba(27,95,174,.14);"></textarea>
+        </label>
+        <button type="submit" style="margin-top:4px; background:#1B5FAE; color:#fff; border:none; font-size:16.5px; font-weight:700; padding:17px; border-radius:12px; cursor:pointer;" style-hover="background:#0A2A54;">Enviar solicitação</button>
+        <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+          <p style="margin:0; font-size:14px; color:#12663A; background:#E9F8EF; border:1px solid #BFE8CF; border-radius:10px; padding:12px 14px;">Solicitação preparada. Seu aplicativo de e-mail foi aberto para concluir o envio.</p>
+        </sc-if>
+        <p style="margin:0; font-size:12.5px; color:#8A97A5; line-height:1.5;">Seus dados são usados apenas para o envio da cotação.</p>
+      </form>
+    </div>
+  </section>
+
+  <section id="contato" style="max-width:1180px; margin:0 auto; padding:clamp(52px,7vw,88px) 20px; animation:volReveal linear both; animation-timeline:view(); animation-range:entry 8% cover 26%;">
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:clamp(28px,4vw,48px); align-items:start;">
+      <div>
+        <span style="font-size:12.5px; font-weight:700; letter-spacing:.16em; color:#1B5FAE;">CONTATO E LOCALIZAÇÃO</span>
+        <h2 style="margin:14px 0 0; font-size:clamp(26px,3.2vw,36px); font-weight:800; letter-spacing:-.025em; color:#0F2138;">Venha tomar um café com a gente</h2>
+        <div style="display:flex; flex-direction:column; gap:20px; margin-top:28px;">
+          <span style="display:flex; gap:14px; align-items:flex-start;">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#1B5FAE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-top:3px; flex:none;"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"></path><circle cx="12" cy="10" r="2.6"></circle></svg>
+            <span style="font-size:15.5px; line-height:1.6; color:#3D4B59;"><strong style="display:block; color:#16202B;">Endereço</strong>Rua Exemplo, 123 — Sala 45<br>Centro, Cidade/UF — CEP 00000-000</span>
+          </span>
+          <span style="display:flex; gap:14px; align-items:flex-start;">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#1B5FAE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-top:3px; flex:none;"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1.1 1A16 16 0 0 1 4 5.1 1 1 0 0 1 5 4z"></path></svg>
+            <span style="font-size:15.5px; line-height:1.6; color:#3D4B59;"><strong style="display:block; color:#16202B;">Telefone</strong>(00) 0000-0000 · (00) 00000-0000</span>
+          </span>
+          <span style="display:flex; gap:14px; align-items:flex-start;">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#1B5FAE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-top:3px; flex:none;"><path d="M3 6h18v12H3z"></path><path d="M3 7l9 6 9-6"></path></svg>
+            <span style="font-size:15.5px; line-height:1.6; color:#3D4B59;"><strong style="display:block; color:#16202B;">E-mail</strong>contato@volotaoseguros.com.br</span>
+          </span>
+          <span style="display:flex; gap:14px; align-items:flex-start;">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#1B5FAE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-top:3px; flex:none;"><circle cx="12" cy="12" r="8.5"></circle><path d="M12 7v5l3.5 2"></path></svg>
+            <span style="font-size:15.5px; line-height:1.6; color:#3D4B59;"><strong style="display:block; color:#16202B;">Horário de atendimento</strong>Segunda a sexta, 9h às 18h</span>
+          </span>
+        </div>
+        <div style="display:flex; gap:10px; margin-top:28px;">
+          <a href="#" aria-label="Instagram" style="width:44px; height:44px; border-radius:12px; border:1px solid #E3E8EF; display:flex; align-items:center; justify-content:center; color:#3D4B59;" style-hover="border-color:#1B5FAE; color:#1B5FAE;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="4.5"></rect><circle cx="12" cy="12" r="3.6"></circle><path d="M17 7.2h.01"></path></svg></a>
+          <a href="#" aria-label="Facebook" style="width:44px; height:44px; border-radius:12px; border:1px solid #E3E8EF; display:flex; align-items:center; justify-content:center; color:#3D4B59;" style-hover="border-color:#1B5FAE; color:#1B5FAE;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 8.5H17V5h-2.5A3.5 3.5 0 0 0 11 8.5V11H8.5v3.5H11V21h3.5v-6.5H17L17.5 11H14.5V8.8z"></path></svg></a>
+          <a href="#" aria-label="LinkedIn" style="width:44px; height:44px; border-radius:12px; border:1px solid #E3E8EF; display:flex; align-items:center; justify-content:center; color:#3D4B59;" style-hover="border-color:#1B5FAE; color:#1B5FAE;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10v8M6 6.5h.01M11 18v-4.2a2.3 2.3 0 0 1 4.6 0V18"></path><path d="M11 10v8"></path></svg></a>
+          <a href="{{ waLink }}" target="_blank" rel="noopener" aria-label="WhatsApp" style="width:44px; height:44px; border-radius:12px; border:1px solid #E3E8EF; display:flex; align-items:center; justify-content:center; color:#3D4B59;" style-hover="border-color:#25D366; color:#12663A;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.7-4.8A8.5 8.5 0 1 1 21 11.5z"></path><path d="M8.8 9.2c.3 2.6 3.4 5.7 6 6l1.3-1.6 2 1-.4 1.7c-2.9.8-7.9-3-8.8-6.9l1.6-.7z"></path></svg></a>
+        </div>
+      </div>
+      <div style="aspect-ratio:4/3; width:100%; border-radius:16px; border:1px solid #DCE3EC; background-color:#EEF2F6; background-image:repeating-linear-gradient(135deg,#E5EBF1 0 12px,#EEF2F6 12px 24px); display:flex; align-items:center; justify-content:center;">
+        <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12.5px; color:#5E7286; background:rgba(255,255,255,.9); padding:10px 14px; border-radius:8px; border:1px solid #DCE3EC; text-align:center;">incorporar Google Maps (iframe)</span>
+      </div>
+    </div>
+  </section>
+
+  <footer style="background:#0F2138; color:#C6D0DB;">
+    <div style="max-width:1180px; margin:0 auto; padding:clamp(40px,5vw,60px) 20px 28px; display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:32px;">
+      <div>
+        <span style="display:flex; align-items:center; gap:10px;">
+          <svg width="30" height="34" viewBox="0 0 34 38" aria-hidden="true">
+            <path d="M17 1.5 32 7v12.5C32 28 25.6 33.6 17 36.5 8.4 33.6 2 28 2 19.5V7z" fill="#1B5FAE"></path>
+            <path d="M10.5 14.5 17 26l6.5-11.5" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <span style="display:flex; flex-direction:column; line-height:1;">
+            <span style="font-size:17px; font-weight:800; letter-spacing:-.02em; color:#fff;">VOLOTÃO</span>
+            <span style="font-size:8px; font-weight:600; letter-spacing:.22em; color:#8FA1B5; margin-top:4px;">CORRETORA DE SEGUROS</span>
+          </span>
+        </span>
+        <p style="margin:18px 0 0; font-size:14px; line-height:1.6; color:#95A5B8; max-width:280px;">Mais de 15 anos intermediando seguros e consórcios com atendimento próximo e transparente.</p>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <strong style="font-size:13px; letter-spacing:.12em; color:#fff;">NAVEGAÇÃO</strong>
+        <a href="#servicos" style="font-size:14.5px; color:#C6D0DB;" style-hover="color:#fff;">Serviços</a>
+        <a href="#sobre" style="font-size:14.5px; color:#C6D0DB;" style-hover="color:#fff;">Sobre</a>
+        <a href="#seguradoras" style="font-size:14.5px; color:#C6D0DB;" style-hover="color:#fff;">Seguradoras Parceiras</a>
+        <a href="#proposta" style="font-size:14.5px; color:#C6D0DB;" style-hover="color:#fff;">Solicitar Proposta</a>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <strong style="font-size:13px; letter-spacing:.12em; color:#fff;">CONTATO</strong>
+        <span style="font-size:14.5px; line-height:1.6; color:#95A5B8;">Rua Exemplo, 123 — Sala 45<br>Centro, Cidade/UF</span>
+        <span style="font-size:14.5px; color:#95A5B8;">(00) 00000-0000</span>
+        <span style="font-size:14.5px; color:#95A5B8;">contato@volotaoseguros.com.br</span>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <strong style="font-size:13px; letter-spacing:.12em; color:#fff;">REDES</strong>
+        <div style="display:flex; gap:10px;">
+          <a href="#" aria-label="Instagram" style="width:40px; height:40px; border-radius:11px; border:1px solid #2A3E56; display:flex; align-items:center; justify-content:center; color:#C6D0DB;" style-hover="border-color:#5B8ECB; color:#fff;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="4.5"></rect><circle cx="12" cy="12" r="3.6"></circle><path d="M17 7.2h.01"></path></svg></a>
+          <a href="#" aria-label="Facebook" style="width:40px; height:40px; border-radius:11px; border:1px solid #2A3E56; display:flex; align-items:center; justify-content:center; color:#C6D0DB;" style-hover="border-color:#5B8ECB; color:#fff;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 8.5H17V5h-2.5A3.5 3.5 0 0 0 11 8.5V11H8.5v3.5H11V21h3.5v-6.5H17L17.5 11H14.5V8.8z"></path></svg></a>
+          <a href="#" aria-label="LinkedIn" style="width:40px; height:40px; border-radius:11px; border:1px solid #2A3E56; display:flex; align-items:center; justify-content:center; color:#C6D0DB;" style-hover="border-color:#5B8ECB; color:#fff;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10v8M6 6.5h.01M11 18v-4.2a2.3 2.3 0 0 1 4.6 0V18"></path><path d="M11 10v8"></path></svg></a>
+          <a href="{{ waLink }}" target="_blank" rel="noopener" aria-label="WhatsApp" style="width:40px; height:40px; border-radius:11px; border:1px solid #2A3E56; display:flex; align-items:center; justify-content:center; color:#C6D0DB;" style-hover="border-color:#25D366; color:#fff;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.7-4.8A8.5 8.5 0 1 1 21 11.5z"></path><path d="M8.8 9.2c.3 2.6 3.4 5.7 6 6l1.3-1.6 2 1-.4 1.7c-2.9.8-7.9-3-8.8-6.9l1.6-.7z"></path></svg></a>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1180px; margin:0 auto; padding:18px 20px 32px; border-top:1px solid #1E3049; font-size:13px; color:#7D8DA1; display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between;">
+      <span>© 2026 Volotão Corretora de Seguros. Todos os direitos reservados.</span>
+      <span>CNPJ 00.000.000/0001-00 · SUSEP 000000000</span>
+    </div>
+  </footer>
+
+  <a href="{{ waLink }}" target="_blank" rel="noopener" aria-label="Falar no WhatsApp" style="position:fixed; right:18px; bottom:18px; z-index:60; width:60px; height:60px; border-radius:50%; background:#25D366; color:#08331A; display:flex; align-items:center; justify-content:center; box-shadow:0 10px 26px rgba(9,74,38,.32);" style-hover="background:#1FBE5B; color:#062B15;">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.7-4.8A8.5 8.5 0 1 1 21 11.5z"></path><path d="M8.8 9.2c.3 2.6 3.4 5.7 6 6l1.3-1.6 2 1-.4 1.7c-2.9.8-7.9-3-8.8-6.9l1.6-.7z"></path></svg>
+  </a>
+
+  <sc-if value="{{ hasModal }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeModal }}" style="position:fixed; inset:0; z-index:80; background:rgba(10,26,44,.55); backdrop-filter:blur(3px); display:flex; align-items:center; justify-content:center; padding:18px; animation:volFade .15s ease-out;">
+      <div onClick="{{ stop }}" role="dialog" aria-modal="true" style="background:#fff; border-radius:18px; width:100%; max-width:520px; max-height:88vh; overflow-y:auto; padding:clamp(24px,4vw,34px); box-shadow:0 28px 70px rgba(5,20,40,.4); animation:volPop .18s ease-out;">
+        <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px;">
+          <span style="width:48px; height:48px; border-radius:13px; background:#EAF2FB; display:flex; align-items:center; justify-content:center; flex:none;">
+            <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#1B5FAE" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="{{ modalD }}"></path></svg>
+          </span>
+          <button type="button" onClick="{{ closeModal }}" aria-label="Fechar" style="width:38px; height:38px; flex:none; border:1px solid #E3E8EF; background:#fff; border-radius:10px; cursor:pointer; color:#66727E; display:flex; align-items:center; justify-content:center;" style-hover="background:#F5F7FA; color:#16202B;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+          </button>
+        </div>
+        <span style="display:block; margin-top:18px; font-size:12.5px; font-weight:700; letter-spacing:.14em; color:#1B5FAE;">{{ modalCat }}</span>
+        <h3 style="margin:8px 0 0; font-size:26px; font-weight:800; letter-spacing:-.02em; color:#0F2138;">{{ modalName }}</h3>
+        <p style="margin:14px 0 0; font-size:16px; line-height:1.65; color:#54626F;">{{ modalDesc }}</p>
+        <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:26px;">
+          <a href="{{ modalWa }}" target="_blank" rel="noopener" style="flex:1; min-width:200px; text-align:center; background:#25D366; color:#08331A; font-size:15.5px; font-weight:700; padding:15px 20px; border-radius:12px;" style-hover="background:#1FBE5B; color:#062B15;">Solicitar este seguro</a>
+          <button type="button" onClick="{{ useInForm }}" style="flex:1; min-width:160px; background:#fff; border:1.5px solid #DCE3EC; color:#1B5FAE; font-size:15.5px; font-weight:700; padding:14px 20px; border-radius:12px; cursor:pointer;" style-hover="border-color:#1B5FAE; background:#F5F9FD;">Usar no formulário</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;whatsappNumber&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;5500000000000&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contato&quot;},&quot;formEmail&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;contato@volotaoseguros.com.br&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contato&quot;}}">
+const ICONS = {
+  car: "M4 13h16v4h-2.2M9.8 17H6.2M4 17v-4l1.9-4.6A2 2 0 0 1 7.7 7h8.6a2 2 0 0 1 1.8 1.4L20 13M8 16.6a1.4 1.4 0 1 0 0-.1zM17.6 16.6a1.4 1.4 0 1 0 0-.1z",
+  carYoung: "M4 13h16v4h-2.2M9.8 17H6.2M4 17v-4l1.9-4.6A2 2 0 0 1 7.7 7h5.4M4 13h16M8 16.6a1.4 1.4 0 1 0 0-.1zM17.6 16.6a1.4 1.4 0 1 0 0-.1zM17 4.5l1 2 2 .3-1.5 1.4.4 2.1-1.9-1-1.9 1 .4-2.1L14 6.8l2-.3z",
+  carTag: "M4 13h16v4h-2.2M9.8 17H6.2M4 17v-4l1.9-4.6A2 2 0 0 1 7.7 7h8.6a2 2 0 0 1 1.8 1.4L20 13M8 16.6a1.4 1.4 0 1 0 0-.1zM17.6 16.6a1.4 1.4 0 1 0 0-.1zM9 10h6",
+  dealer: "M3 20h18M5 20v-7h14v7M4.6 13l1.5-3.6A2 2 0 0 1 8 8h8a2 2 0 0 1 1.9 1.4l1.5 3.6M8.5 16.6h2M13.5 16.6h2",
+  bike: "M6 18.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm12 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM9 15l3.2-7H15M7.4 8h4.2",
+  truck: "M3 7h11v9H3zM14 10.5h4l3 3V16h-7zM7 18.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm10 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z",
+  store: "M4 10l8-5 8 5M6 10v9h12v-9M9.5 19v-4.5h5V19",
+  house: "M4 11l8-6 8 6v8a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z",
+  key: "M15 6.5a4 4 0 1 0-3.6 6L10 14H8v2H6v2H3.5v-2.6l7-7A4 4 0 0 1 15 6.5z",
+  building: "M5 20V5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v15M14 9h4a1 1 0 0 1 1 1v10M8 8h3M8 12h3M8 16h3M3 20h18",
+  shield: "M12 4l7 3v5c0 4-3 6.5-7 8-4-1.5-7-4-7-8V7z",
+  bottle: "M10 4h4v3h-4zM8 10a3 3 0 0 1 2-2.8V7h4v.2A3 3 0 0 1 16 10v8a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2z",
+  laptop: "M5 6h14v9H5zM3 18.5h18",
+  phone: "M8.5 3h7v18h-7zM11 18.2h2",
+  plane: "M3 12l18-7-7 18-2.4-7.6z",
+  health: "M12 4.5l7 2.8v4.7c0 3.8-2.8 6.3-7 7.5-4.2-1.2-7-3.7-7-7.5V7.3zM12 9.5v5M9.5 12h5",
+  paw: "M7.4 12.6a1.7 1.7 0 1 0 0-3.4 1.7 1.7 0 0 0 0 3.4zm9.2 0a1.7 1.7 0 1 0 0-3.4 1.7 1.7 0 0 0 0 3.4zM10.2 8.6a1.7 1.7 0 1 0 0-3.4 1.7 1.7 0 0 0 0 3.4zm3.6 0a1.7 1.7 0 1 0 0-3.4 1.7 1.7 0 0 0 0 3.4zM12 12.4c2.4 0 4 1.9 4 3.5S14.4 19 12 19s-4-1.5-4-3.1 1.6-3.5 4-3.5z",
+  wallet: "M4 8h14a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H4zM4 8V6h12M16.5 13h.6",
+  cycle: "M19 12a7 7 0 1 1-2-4.9M19 6v4h-4"
+};
+
+const SERVICES = [
+  { name: "Auto", cat: "Veículos", icon: "car", desc: "Cobertura completa para o seu carro: colisão, roubo, furto, incêndio, terceiros, carro reserva e assistência 24 horas. Comparamos as principais seguradoras para equilibrar preço e cobertura." },
+  { name: "Auto Jovem", cat: "Veículos", icon: "carYoung", desc: "Condições pensadas para condutores jovens e recém-habilitados, com franquias e coberturas ajustadas ao perfil e telemetria opcional para reduzir o prêmio." },
+  { name: "Carros Seminovos", cat: "Veículos", icon: "carTag", desc: "Proteção para veículos seminovos e usados, incluindo opções de cobertura parcial (roubo, furto e incêndio) para quem busca custo reduzido." },
+  { name: "Bike", cat: "Veículos", icon: "bike", desc: "Seguro para bicicletas e e-bikes contra roubo, furto qualificado, danos acidentais e responsabilidade civil, válido também em competições e viagens." },
+  { name: "Transportes", cat: "Veículos", icon: "truck", desc: "Seguro de cargas (RCTR-C, RCF-DC) para transportadoras e embarcadores, com cobertura de avarias, desvios e operações intermodais." },
+  { name: "Concessionárias", cat: "Veículos", icon: "dealer", desc: "Proteção para o estoque de veículos, pátio, test-drive e responsabilidade civil de concessionárias e revendas." },
+  { name: "Imobiliária", cat: "Residencial e Imobiliário", icon: "house", desc: "Seguro residencial e predial para imóveis próprios, alugados ou administrados: incêndio, danos elétricos, vendaval, roubo e assistência 24h." },
+  { name: "Fiança Locatícia", cat: "Residencial e Imobiliário", icon: "key", desc: "Alternativa ao fiador e ao depósito caução. Garante aluguel, encargos e danos ao imóvel, agilizando a aprovação da locação." },
+  { name: "Seguro Empresa", cat: "Empresas", icon: "building", desc: "Proteção patrimonial completa para a sua operação: incêndio, vendaval, danos elétricos, roubo, lucros cessantes e responsabilidade civil." },
+  { name: "Garantia", cat: "Empresas", icon: "shield", desc: "Seguro garantia para licitações, contratos públicos e privados, garantia judicial e performance bond, liberando capital de giro." },
+  { name: "Perfumarias", cat: "Empresas", icon: "bottle", desc: "Cobertura específica para lojas de perfumaria e cosméticos: estoque, vitrine, quebra, roubo e responsabilidade civil do estabelecimento." },
+  { name: "Transportes / Frotas", cat: "Empresas", icon: "truck", desc: "Gestão de seguro para frotas com apólice única, condições negociadas por volume e acompanhamento de sinistralidade." },
+  { name: "Notebook", cat: "Eletrônicos", icon: "laptop", desc: "Proteção para notebooks contra roubo, furto qualificado, queda, líquidos e danos elétricos, com cobertura dentro e fora do país." },
+  { name: "Celular e Tablet", cat: "Eletrônicos", icon: "phone", desc: "Seguro para smartphones e tablets cobrindo tela quebrada, danos acidentais, roubo e furto, com reparo ou reposição rápida." },
+  { name: "Viagem", cat: "Viagem e Lazer", icon: "plane", desc: "Assistência médica internacional, bagagem extraviada, cancelamento de viagem e cobertura exigida pelo Tratado de Schengen." },
+  { name: "Seguro Saúde", cat: "Saúde e Bem-estar", icon: "health", desc: "Planos de saúde individuais, familiares e empresariais. Comparamos redes credenciadas, carências e reembolsos para encontrar o plano com a melhor relação entre cobertura e mensalidade." },
+  { name: "Saúde Ocupacional", cat: "Saúde e Bem-estar", icon: "shield", desc: "Gestão de saúde ocupacional para empresas: exames admissionais e periódicos, PCMSO e PGR em conformidade com as normas regulamentadoras." },
+  { name: "Petlove Saúde", cat: "Saúde e Bem-estar", icon: "paw", desc: "Plano de saúde para cães e gatos com consultas, exames, vacinas, internações e cirurgias em uma rede credenciada de clínicas." },
+  { name: "Consignado", cat: "Crédito", icon: "wallet", desc: "Crédito consignado para servidores, aposentados e pensionistas, com as menores taxas do mercado e desconto direto em folha." },
+  { name: "Consórcio", cat: "Consórcios", icon: "cycle", desc: "Consórcio de automóveis, imóveis, motos e serviços. Sem juros, com parcelas planejadas e possibilidade de lance para antecipar a contemplação." }
+];
+
+const CATS = ["Todos", "Veículos", "Residencial e Imobiliário", "Empresas", "Eletrônicos", "Viagem e Lazer", "Saúde e Bem-estar", "Crédito", "Consórcios"];
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      w: typeof window !== "undefined" ? window.innerWidth : 1200,
+      q: "", cat: "Todos", sel: null, menu: false, formService: "", sent: false,
+      active: "", progress: 0, slide: 0
+    };
+    this._carousel = React.createRef();
+  }
+
+  goTo(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY - 74;
+    window.scrollTo({ top, behavior: "smooth" });
+  }
+  componentDidMount() {
+    this._onResize = () => {
+      const w = document.documentElement.clientWidth || window.innerWidth;
+      if (w !== this.state.w) this.setState({ w });
+    };
+    this._onResize();
+    requestAnimationFrame(this._onResize);
+    this._t1 = setTimeout(this._onResize, 150);
+    this._t2 = setTimeout(this._onResize, 600);
+    window.addEventListener("resize", this._onResize);
+
+    this._onScroll = () => {
+      const doc = document.documentElement;
+      const max = doc.scrollHeight - window.innerHeight;
+      const progress = max > 0 ? Math.min(1, window.scrollY / max) : 0;
+      let active = "";
+      ["topo", "servicos", "seguradoras", "sobre", "contato"].forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const r = el.getBoundingClientRect();
+        if (r.top <= 140 && r.bottom > 140) active = id;
+      });
+      if (progress !== this.state.progress || active !== this.state.active) {
+        this.setState({ progress, active });
+      }
+    };
+    this._raf = () => {
+      if (this._tick) return;
+      this._tick = requestAnimationFrame(() => { this._tick = null; this._onScroll(); });
+    };
+    this._onScroll();
+    window.addEventListener("scroll", this._raf, { passive: true });
+
+
+    if (typeof ResizeObserver !== "undefined") {
+      this._ro = new ResizeObserver(this._onResize);
+      this._ro.observe(document.body);
+    }
+  }
+  componentWillUnmount() {
+    window.removeEventListener("resize", this._onResize);
+    window.removeEventListener("scroll", this._raf);
+    if (this._ro) this._ro.disconnect();
+    clearTimeout(this._t1);
+    clearTimeout(this._t2);
+  }
+
+  wa(text) {
+    const num = (this.props.whatsappNumber ?? "5500000000000").replace(/\D/g, "");
+    return "https://wa.me/" + num + "?text=" + encodeURIComponent(text || "Olá! Gostaria de solicitar uma proposta de seguro.");
+  }
+
+  renderVals() {
+    const st = this.state;
+    const isMobile = st.w < 900;
+    const isPhone = st.w < 640;
+    const q = st.q.trim().toLowerCase();
+    const list = SERVICES.filter(s =>
+      (st.cat === "Todos" || s.cat === st.cat) &&
+      (!q || s.name.toLowerCase().includes(q) || s.cat.toLowerCase().includes(q) || s.desc.toLowerCase().includes(q))
+    );
+    const chipBase = "cursor:pointer; font-family:inherit; font-size:14px; font-weight:600; padding:10px 16px; border-radius:999px; transition:all .15s;" + (isPhone ? " white-space:nowrap; flex:none;" : "");
+    const chips = CATS.map(c => ({
+      label: c,
+      onClick: () => this.setState({ cat: c }),
+      style: st.cat === c
+        ? chipBase + "background:#0A2A54; color:#fff; border:1px solid #0A2A54;"
+        : chipBase + "background:#fff; color:#3D4B59; border:1px solid #DCE3EC;"
+    }));
+    const sel = st.sel ? SERVICES.find(s => s.name === st.sel) : null;
+
+    return {
+      isMobile, isDesktop: !isMobile,
+      isPhone, isNotPhone: !isPhone,
+      heroStatsStyle: isPhone
+        ? "margin-top:14px; background:#fff; border:1px solid #E3E8EF; border-radius:14px; padding:14px 16px; display:flex; gap:12px; justify-content:space-between; text-align:center;"
+        : "position:absolute; left:-8px; bottom:-18px; background:#fff; border:1px solid #E3E8EF; border-radius:14px; padding:16px 20px; box-shadow:0 12px 30px rgba(15,33,56,.10); display:flex; gap:18px; max-width:calc(100% + 8px);",
+      heroTrustStyle: isPhone
+        ? "display:flex; flex-direction:column; gap:10px; margin-top:26px; color:#66727E; font-size:14px; font-weight:600;"
+        : "display:flex; flex-wrap:wrap; gap:22px; margin-top:34px; color:#66727E; font-size:13.5px; font-weight:600;",
+      heroCtaStyle: isPhone
+        ? "display:flex; flex-direction:column; gap:10px; margin-top:28px;"
+        : "display:flex; flex-wrap:wrap; gap:12px; margin-top:32px;",
+      ctaPrimaryStyle: "display:inline-flex; align-items:center; justify-content:center; gap:10px; background:#1B5FAE; color:#fff; font-size:16px; font-weight:700; padding:16px 26px; border-radius:12px; box-shadow:0 8px 20px rgba(27,95,174,.24);" + (isPhone ? " width:100%;" : ""),
+      ctaSecondaryStyle: "display:inline-flex; align-items:center; justify-content:center; gap:10px; background:#fff; color:#12663A; border:1.5px solid #25D366; font-size:16px; font-weight:700; padding:15px 24px; border-radius:12px;" + (isPhone ? " width:100%;" : ""),
+      chipsRowStyle: isPhone
+        ? "margin-top:18px; display:flex; gap:9px; overflow-x:auto; scrollbar-width:none; margin-left:-20px; margin-right:-20px; padding:2px 20px 6px;"
+        : "margin-top:18px; display:flex; flex-wrap:wrap; gap:9px;",
+      carouselRef: this._carousel,
+      destaquesStyle: isMobile
+        ? "display:grid; grid-auto-flow:column; grid-auto-columns:84%; gap:14px; overflow-x:auto; scroll-snap-type:x mandatory; scroll-padding:0 20px; padding-bottom:4px; margin:0 -20px; padding-left:20px; padding-right:20px; -webkit-overflow-scrolling:touch; scrollbar-width:none;"
+        : "display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:18px;",
+      onCarouselScroll: e => {
+        const el = e.currentTarget;
+        const i = Math.round(el.scrollLeft / (el.scrollWidth / 3));
+        if (i !== st.slide) this.setState({ slide: i });
+      },
+      dots: [0, 1, 2].map(i => ({
+        label: "Ir para o destaque " + (i + 1),
+        onClick: () => {
+          const el = this._carousel.current;
+          if (el) el.scrollTo({ left: (el.scrollWidth / 3) * i, behavior: "smooth" });
+        },
+        style: "cursor:pointer; border:none; padding:0; height:7px; border-radius:99px; transition:width .25s, background .25s; width:" +
+          (st.slide === i ? "24px" : "7px") + "; background:" + (st.slide === i ? "#1B5FAE" : "#D3DDE8") + ";"
+      })),
+      navItems: [
+        { href: "#servicos", id: "servicos", label: "Serviços" },
+        { href: "#sobre", id: "sobre", label: "Sobre" },
+        { href: "#seguradoras", id: "seguradoras", label: "Seguradoras Parceiras" },
+        { href: "#contato", id: "contato", label: "Contato" }
+      ].map(n => ({
+        href: n.href,
+        label: n.label,
+        onClick: e => { e.preventDefault(); this.goTo(n.id); },
+        underline: "position:absolute; left:0; right:0; bottom:-2px; height:2px; border-radius:2px; background:#1B5FAE; transform-origin:left; transition:transform .28s cubic-bezier(.22,.7,.3,1); transform:scaleX(" + (st.active === n.id ? 1 : 0) + ");"
+      })),
+      progressStyle: "height:2px; width:" + (st.progress * 100).toFixed(2) + "%; background:linear-gradient(90deg,#1B5FAE,#2E7FD4); transition:width .12s linear;",
+      menuOpen: st.menu,
+      toggleMenu: () => this.setState(s => ({ menu: !s.menu })),
+      closeMenu: e => {
+        const href = e && e.currentTarget && e.currentTarget.getAttribute("href");
+        if (href && href.startsWith("#")) {
+          e.preventDefault();
+          this.setState({ menu: false });
+          setTimeout(() => this.goTo(href.slice(1)), 40);
+        } else {
+          this.setState({ menu: false });
+        }
+      },
+      waLink: this.wa(),
+      query: st.q,
+      onQuery: e => this.setState({ q: e.target.value }),
+      chips,
+      shown: list.map(s => ({ ...s, d: ICONS[s.icon], onClick: () => this.setState({ sel: s.name }) })),
+      empty: list.length === 0,
+      insurers: ["Porto Seguro", "Bradesco Seguros", "Mapfre", "SulAmérica", "Allianz", "Tokio Marine", "HDI Seguros", "Azul Seguros"],
+      allNames: SERVICES.map(s => s.name),
+      formService: st.formService,
+      onService: e => this.setState({ formService: e.target.value }),
+      sent: st.sent,
+      openConsorcio: () => this.setState({ sel: "Consórcio" }),
+      openAuto: () => this.setState({ sel: "Auto" }),
+      openSaude: () => this.setState({ sel: "Seguro Saúde" }),
+      hasModal: !!sel,
+      modalName: sel ? sel.name : "",
+      modalCat: sel ? sel.cat.toUpperCase() : "",
+      modalDesc: sel ? sel.desc : "",
+      modalD: sel ? ICONS[sel.icon] : "",
+      modalWa: sel ? this.wa("Olá! Tenho interesse em " + sel.name + ". Pode me enviar uma proposta?") : this.wa(),
+      closeModal: () => this.setState({ sel: null }),
+      stop: e => e.stopPropagation(),
+      useInForm: () => {
+        this.setState({ formService: st.sel, sel: null });
+        const el = document.getElementById("proposta");
+        if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 70, behavior: "smooth" });
+      },
+      onSubmit: e => {
+        e.preventDefault();
+        const f = new FormData(e.target);
+        // INTEGRAÇÃO: substituir o mailto abaixo pelo endpoint do formulário
+        // (ex.: fetch('https://formspree.io/f/xxxx', { method:'POST', body:f }))
+        const corpo =
+          "Nome: " + (f.get("nome") || "") +
+          "\nTelefone: " + (f.get("telefone") || "") +
+          "\nE-mail: " + (f.get("email") || "") +
+          "\nTipo de seguro: " + (f.get("servico") || "") +
+          "\n\n" + (f.get("mensagem") || "");
+        window.location.href = "mailto:" + (this.props.formEmail ?? "contato@volotaoseguros.com.br") +
+          "?subject=" + encodeURIComponent("Solicitação de proposta — site") +
+          "&body=" + encodeURIComponent(corpo);
+        this.setState({ sent: true });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>
