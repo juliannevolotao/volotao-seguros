@@ -1,25 +1,65 @@
-# CODING AGENTS: READ THIS FIRST
+# Volotão Corretora de Seguros — Landing Page
 
-This is a **handoff bundle** from Claude Design (claude.ai/design).
+Landing page de alta conversão para a Volotão, corretora de seguros. Construída com **Next.js (App Router) + TypeScript + Tailwind CSS**, com navegação fluida (scroll suave, seção ativa, barra de progresso), catálogo de serviços com busca/filtros instantâneos, e envio de e-mail real pelo formulário de proposta via **Resend**.
 
-A user mocked up designs in HTML/CSS/JS using an AI design tool, then exported this bundle so a coding agent can implement the designs for real.
+> A pasta `design/` contém o material original do handoff do Claude Design (protótipo HTML/CSS/JS e o histórico de decisões) — mantida como referência, não faz parte do app.
 
-## What you should do — IMPORTANT
+## Estrutura de pastas
 
-**Read the chat transcripts first.** There are 1 chat transcript(s) in `chats/`. The transcripts show the full back-and-forth between the user and the design assistant — they tell you **what the user actually wants** and **where they landed** after iterating. Don't skip them. The final HTML files are the output, but the chat is where the intent lives.
+```
+app/
+  page.tsx            # monta a página a partir das seções
+  layout.tsx           # fontes, metadata
+  api/contact/route.ts # endpoint que envia o e-mail da proposta (Resend)
+components/
+  layout/               # Header, Footer, WhatsAppButton
+  sections/             # Hero, Highlights, ServiceCatalog, ServiceModal, Insurers, About, ProposalForm, Contact
+  providers/            # ServiceModalProvider — estado compartilhado do modal/formulário
+  ui/                   # Icon, Logo, PlaceholderImage
+lib/
+  services.ts           # catálogo de serviços + categorias
+  site-config.ts         # dados da empresa (telefone, e-mail, endereço, seguradoras…)
+  icons.ts               # paths dos ícones outline usados pelo <Icon />
+  scroll.ts               # helper de scroll suave com offset do header
+hooks/
+  useActiveSection.ts     # seção ativa no menu (IntersectionObserver)
+  useScrollProgress.ts    # barra de progresso do header
+```
 
-**Read `project/Volotao Landing.dc.html` in full.** The user had this file open when they triggered the handoff, so it's almost certainly the primary design they want built. Read it top to bottom — don't skim. Then **follow its imports**: open every file it pulls in (shared components, CSS, scripts) so you understand how the pieces fit together before you start implementing.
+## Como rodar
 
-**If anything is ambiguous, ask the user to confirm before you start implementing.** It's much cheaper to clarify scope up front than to build the wrong thing.
+```bash
+npm install
+cp .env.example .env.local   # preencha as variáveis abaixo
+npm run dev
+```
 
-## About the design files
+## Configuração
 
-The design medium is **HTML/CSS/JS** — these are prototypes, not production code. Your job is to **recreate them pixel-perfectly** in whatever technology makes sense for the target codebase (React, Vue, native, whatever fits). Match the visual output; don't copy the prototype's internal structure unless it happens to fit.
+Todo o conteúdo editável (placeholders) está centralizado em `lib/site-config.ts` e `lib/services.ts` — não é preciso caçar texto espalhado pelos componentes.
 
-**Don't render these files in a browser or take screenshots unless the user asks you to.** Everything you need — dimensions, colors, layout rules — is spelled out in the source. Read the HTML and CSS directly; a screenshot won't tell you anything they don't.
+### Envio de e-mail (formulário "Solicitar Proposta")
 
-## Bundle contents
+O endpoint `app/api/contact/route.ts` envia o e-mail via [Resend](https://resend.com). Configure em `.env.local`:
 
-- `README.md` — this file
-- `chats/` — conversation transcripts (read these!)
-- `project/` — the `Volotão Seguros` project files (HTML prototypes, assets, components)
+| Variável | Descrição |
+|---|---|
+| `RESEND_API_KEY` | Chave de API do Resend (grátis em resend.com/api-keys) |
+| `CONTACT_TO_EMAIL` | E-mail que recebe as solicitações |
+| `CONTACT_FROM_EMAIL` | Remetente. O domínio sandbox do Resend funciona sem configuração; para enviar como `@volotaoseguros.com.br`, verifique o domínio no painel do Resend |
+
+Sem essas variáveis configuradas, o formulário mostra um erro amigável em vez de falhar silenciosamente.
+
+**Trocar para SMTP/Nodemailer:** se preferir não usar o Resend, troque a implementação dentro de `app/api/contact/route.ts` — o formulário (`components/sections/ProposalForm.tsx`) já só depende do contrato HTTP (`POST /api/contact` com JSON, resposta `{ ok: true }` ou `{ error: string }`), então a troca fica isolada nesse único arquivo.
+
+### Outros placeholders
+
+- **WhatsApp:** `NEXT_PUBLIC_WHATSAPP_NUMBER` em `.env.local` (formato `55DDDNUMERO`).
+- **Logos das seguradoras**, **foto do hero/destaques** e **mapa do Google**: hoje são placeholders visuais (`components/ui/PlaceholderImage.tsx` e a lista de texto em `siteConfig.insurers`). Substitua por imagens/iframe reais quando disponíveis.
+- **Endereço, telefone, horário, redes sociais:** `lib/site-config.ts`.
+
+## Decisões de implementação
+
+- **Responsividade via Tailwind**, não JS: onde o protótipo original alternava entre layouts mobile/desktop lendo `window.innerWidth`, aqui isso é `hidden md:flex` / `sm:hidden` etc. — mais simples de manter e sem risco de hidration mismatch.
+- **Estado do modal de serviço** é compartilhado entre os destaques, o catálogo e o formulário via `ServiceModalProvider` (React Context), para o botão "Usar no formulário" poder pré-selecionar o campo "Tipo de seguro".
+- **Seção ativa do menu** usa `IntersectionObserver` (não scroll polling) para performance.
