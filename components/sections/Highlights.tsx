@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { Icon } from "@/components/ui/Icon";
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
+import { Reveal } from "@/components/ui/Reveal";
 import { useServiceModal } from "@/components/providers/ServiceModalProvider";
 import type { IconName } from "@/lib/icons";
 
@@ -48,7 +49,7 @@ function HighlightCard({ item }: { item: Highlight }) {
 
   return (
     <div
-      className={`relative flex flex-none snap-center flex-col overflow-hidden rounded-2xl [flex-basis:84%] md:flex-1 md:[flex-basis:auto] ${
+      className={`relative flex h-full flex-col overflow-hidden rounded-2xl ${
         isPrimary
           ? "bg-gradient-to-br from-brand-800 to-brand-600 text-white"
           : "border border-ink-200 bg-white"
@@ -122,14 +123,20 @@ export function Highlights() {
   };
 
   return (
-    <section className="reveal-on-scroll mx-auto max-w-[1180px] px-5 pt-[clamp(46px,6vw,72px)]">
+    <section className="mx-auto max-w-[1180px] px-5 pt-[clamp(46px,6vw,72px)]">
       <div
         ref={scrollerRef}
         onScroll={onScroll}
         className="-mx-5 flex gap-3.5 overflow-x-auto px-5 pb-1 no-scrollbar [scroll-snap-type:x_mandatory] md:mx-0 md:grid md:grid-cols-3 md:gap-[18px] md:overflow-visible md:px-0"
       >
-        {HIGHLIGHTS.map((item) => (
-          <HighlightCard key={item.service} item={item} />
+        {HIGHLIGHTS.map((item, i) => (
+          <Reveal
+            key={item.service}
+            delay={i * 90}
+            className="flex-none snap-center [flex-basis:84%] md:flex-1 md:[flex-basis:auto]"
+          >
+            <HighlightCard item={item} />
+          </Reveal>
         ))}
       </div>
 

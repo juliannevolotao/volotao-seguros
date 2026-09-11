@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Icon } from "@/components/ui/Icon";
 import { Logo } from "@/components/ui/Logo";
 import { useActiveSection } from "@/hooks/useActiveSection";
@@ -17,8 +17,16 @@ const NAV_ITEMS = [
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const progress = useScrollProgress();
   const active = useActiveSection(["topo", "servicos", "seguradoras", "sobre", "contato"]);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const goTo = (id: string) => {
     setMenuOpen(false);
@@ -26,7 +34,11 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-ink-200 bg-white/95 backdrop-blur-md">
+    <header
+      className={`sticky top-0 z-50 border-b bg-white/95 backdrop-blur-md transition-shadow duration-300 ${
+        scrolled ? "border-ink-200 shadow-[0_4px_20px_rgba(15,33,56,.08)]" : "border-transparent"
+      }`}
+    >
       <div className="mx-auto flex max-w-[1180px] items-center justify-between gap-4 px-5 py-3">
         <a
           href="#topo"
