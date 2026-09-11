@@ -150,7 +150,7 @@ export function Highlights() {
             className="h-[7px] rounded-full transition-all duration-300"
             style={{
               width: slide === i ? 24 : 7,
-              background: slide === i ? "#1B5FAE" : "#D3DDE8",
+              background: slide === i ? "#1C74C9" : "#D3DDE8",
             }}
           />
         ))}

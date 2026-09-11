@@ -5,13 +5,13 @@ export function Logo({ variant = "light" }: { variant?: "light" | "dark" }) {
       <svg width="34" height="38" viewBox="0 0 34 38" aria-hidden="true" className="shrink-0">
         <defs>
           <linearGradient id="volShield" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="#0A2A54" />
-            <stop offset="1" stopColor="#2E7FD4" />
+            <stop offset="0" stopColor="#1C74C9" />
+            <stop offset="1" stopColor="#57ADEF" />
           </linearGradient>
         </defs>
         <path
           d="M17 1.5 32 7v12.5C32 28 25.6 33.6 17 36.5 8.4 33.6 2 28 2 19.5V7z"
-          fill={isDark ? "#1B5FAE" : "url(#volShield)"}
+          fill={isDark ? "#57ADEF" : "url(#volShield)"}
         />
         <path
           d="M10.5 14.5 17 26l6.5-11.5"

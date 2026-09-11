@@ -89,7 +89,7 @@ export function Hero() {
       </section>
 
       {/* Mobile-only trust strip, in the logo's blue gradient */}
-      <div className="flex gap-0 overflow-x-auto bg-gradient-to-r from-[#215FAF] to-[#3E7CC9] text-white no-scrollbar sm:hidden">
+      <div className="flex gap-0 overflow-x-auto bg-gradient-to-r from-brand-700 to-brand-500 text-white no-scrollbar sm:hidden">
         {TRUST_ITEMS.map((item) => (
           <span
             key={item}

@@ -16,7 +16,7 @@ export function PlaceholderImage({
     <div
       className={`${aspect} w-full flex items-center justify-center ${rounded} border ${
         isDark
-          ? "border-white/20 bg-[#0E3468]"
+          ? "border-white/20 bg-brand-900"
           : "border-brand-200 bg-brand-100/60"
       } ${className}`}
       style={{
@@ -28,7 +28,7 @@ export function PlaceholderImage({
       <span
         className={`rounded-lg border px-3.5 py-2.5 text-center font-mono text-[12px] ${
           isDark
-            ? "border-white/20 bg-[#0A2A54]/70 text-brand-300"
+            ? "border-white/20 bg-brand-800/70 text-brand-300"
             : "border-brand-200 bg-white/90 text-ink-600"
         }`}
       >

@@ -12,18 +12,19 @@ const config: Config = {
         sans: ["var(--font-jakarta)", "system-ui", "sans-serif"],
       },
       colors: {
-        // Institutional blue, taken from the shield gradient in the logo.
+        // Institutional blue, matched to the two-tone chevron gradient in the logo
+        // (a vivid royal blue fading into a lighter sky blue — never near-black navy).
         brand: {
-          50: "#F6F9FC",
-          100: "#EAF2FB",
-          200: "#D3E3F5",
-          300: "#C6D9EF",
-          400: "#9FBBDA",
-          500: "#2E7FD4",
-          600: "#1B5FAE",
-          700: "#123B72",
-          800: "#0A2A54",
-          900: "#081F3E",
+          50: "#F2F9FF",
+          100: "#E1F0FE",
+          200: "#C0E1FC",
+          300: "#8CC8F8",
+          400: "#57ADEF",
+          500: "#2E90E0",
+          600: "#1C74C9",
+          700: "#175EA6",
+          800: "#134C86",
+          900: "#0F3D6C",
         },
         // Graphite grays used for text and neutral surfaces.
         ink: {
@@ -65,7 +66,7 @@ const config: Config = {
         card: "0 2px 10px rgba(15,33,56,.04)",
         "card-hover": "0 10px 24px rgba(15,33,56,.09)",
         stats: "0 12px 30px rgba(15,33,56,.10)",
-        cta: "0 8px 20px rgba(27,95,174,.24)",
+        cta: "0 8px 20px rgba(28,116,201,.24)",
         wa: "0 10px 26px rgba(9,74,38,.32)",
         modal: "0 28px 70px rgba(5,20,40,.4)",
         formCard: "0 20px 50px rgba(5,20,40,.25)",

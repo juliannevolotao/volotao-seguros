@@ -14,19 +14,17 @@ import { Contact } from "@/components/sections/Contact";
 export default function Home() {
   return (
     <ServiceModalProvider>
-      <div className="w-full overflow-x-hidden">
-        <Header />
-        <Hero />
-        <Highlights />
-        <ServiceCatalog />
-        <Insurers />
-        <About />
-        <ProposalForm />
-        <Contact />
-        <Footer />
-        <WhatsAppButton />
-        <ServiceModal />
-      </div>
+      <Header />
+      <Hero />
+      <Highlights />
+      <ServiceCatalog />
+      <Insurers />
+      <About />
+      <ProposalForm />
+      <Contact />
+      <Footer />
+      <WhatsAppButton />
+      <ServiceModal />
     </ServiceModalProvider>
   );
 }

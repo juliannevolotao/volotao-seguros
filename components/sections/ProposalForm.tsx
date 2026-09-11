@@ -48,7 +48,7 @@ export function ProposalForm() {
   };
 
   return (
-    <section id="proposta" className="bg-gradient-to-br from-brand-800 to-[#123B72]">
+    <section id="proposta" className="bg-gradient-to-br from-brand-700 to-brand-900">
       <div className="mx-auto grid max-w-[1180px] grid-cols-1 gap-10 px-5 py-[clamp(48px,6vw,84px)] lg:grid-cols-2 lg:gap-[60px]">
         <Reveal>
           <h2 className="text-[clamp(28px,3.6vw,40px)] font-extrabold tracking-tight text-white">

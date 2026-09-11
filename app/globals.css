@@ -13,6 +13,9 @@ footer {
 
 body {
   @apply bg-white text-ink-950 antialiased;
+  /* Kept on body (not on an inner wrapper) — overflow-x on any ancestor of
+     the sticky header turns it into a scroll container and breaks sticky. */
+  overflow-x: hidden;
 }
 
 /* Hide scrollbars on the mobile carousel / chip strips while keeping them scrollable. */
