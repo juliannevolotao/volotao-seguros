@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Icon } from "@/components/ui/Icon";
 import { useActiveSection } from "@/hooks/useActiveSection";
@@ -47,7 +48,7 @@ export function Header() {
           }}
           className="flex items-center gap-2.5"
         >
-          <img src="/images/logo.png" alt="Volotão Seguros Logo" className="w-48" />
+          <Image src="/images/logo.png" alt="Volotão Corretora de Seguros" width={2172} height={724} className="w-48" priority />
         </a>
 
         {/* Desktop nav */}

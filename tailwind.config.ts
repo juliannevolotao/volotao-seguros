@@ -84,10 +84,15 @@ const config: Config = {
           from: { opacity: "0" },
           to: { opacity: "1" },
         },
+        marquee: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(-50%)" },
+        },
       },
       animation: {
         volPop: "volPop .18s ease-out",
         volFade: "volFade .15s ease-out",
+        marquee: "marquee 16s linear infinite",
       },
     },
   },

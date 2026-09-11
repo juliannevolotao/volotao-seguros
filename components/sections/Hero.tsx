@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Icon } from "@/components/ui/Icon";
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
 import { Reveal } from "@/components/ui/Reveal";
@@ -77,7 +78,14 @@ export function Hero() {
           <Reveal delay={150}>
             <div className="relative">
               <PlaceholderImage label="foto institucional — família / escritório" aspect="aspect-[4/3]" />
-              <img src="/images/section1.jpg" alt="foto institucional — família / escritório" className="absolute inset-0 h-full w-full object-cover rounded-2xl" />
+              <Image
+                src="/images/section1.jpg"
+                alt="Atendimento Volotão Corretora de Seguros"
+                fill
+                sizes="(min-width: 1024px) 560px, 100vw"
+                className="rounded-2xl object-cover"
+                priority
+              />
               <div className="absolute -bottom-[18px] -left-2 hidden max-w-[calc(100%+8px)] gap-[18px] rounded-2xl border border-ink-200 bg-white p-4 px-5 shadow-stats sm:flex">
                 <HeroStats />
               </div>
@@ -89,17 +97,21 @@ export function Hero() {
         </div>
       </section>
 
-      {/* Mobile-only trust strip, in the logo's blue gradient */}
-      <div className="flex gap-0 overflow-x-auto bg-gradient-to-r from-brand-700 to-brand-500 text-white no-scrollbar sm:hidden">
-        {TRUST_ITEMS.map((item) => (
-          <span
-            key={item}
-            className="flex flex-none items-center gap-2 whitespace-nowrap px-[18px] py-3.5 text-[13px] font-semibold"
-          >
-            <Icon name="checkmark" size={15} strokeWidth={2.6} className="shrink-0" />
-            {item}
-          </span>
-        ))}
+      {/* Mobile-only trust strip, in the logo's blue gradient — drifts sideways in an
+          endless loop; the track is duplicated so it can wrap seamlessly at -50%. */}
+      <div className="overflow-hidden bg-gradient-to-r from-brand-700 to-brand-500 text-white sm:hidden">
+        <div className="flex w-max animate-marquee motion-reduce:animate-none">
+          {[...TRUST_ITEMS, ...TRUST_ITEMS].map((item, i) => (
+            <span
+              key={i}
+              aria-hidden={i >= TRUST_ITEMS.length}
+              className="flex flex-none items-center gap-2 whitespace-nowrap px-[18px] py-3.5 text-[13px] font-semibold"
+            >
+              <Icon name="checkmark" size={15} strokeWidth={2.6} className="shrink-0" />
+              {item}
+            </span>
+          ))}
+        </div>
       </div>
     </>
   );

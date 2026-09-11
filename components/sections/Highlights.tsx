@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRef, useState } from "react";
 import { Icon } from "@/components/ui/Icon";
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
@@ -62,7 +63,13 @@ function HighlightCard({ item }: { item: Highlight }) {
           tone={isPrimary ? "dark" : "light"}
           rounded="rounded-none"
         />
-        <img src={`/images/${item.image}.jpg`} alt={item.image} className="absolute inset-0 h-full w-full object-cover rounded-2xl" />
+        <Image
+          src={`/images/${item.image}.jpg`}
+          alt={item.description}
+          fill
+          sizes="(min-width: 768px) 33vw, 84vw"
+          className="object-cover"
+        />
         <span
           className={`absolute -bottom-[26px] left-[clamp(20px,2.4vw,26px)] flex h-[52px] w-[52px] items-center justify-center rounded-[13px] border ${
             isPrimary
