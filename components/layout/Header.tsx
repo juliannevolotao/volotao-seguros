@@ -9,8 +9,8 @@ import { waLink } from "@/lib/site-config";
 
 const NAV_ITEMS = [
   { id: "servicos", label: "Serviços" },
-  { id: "sobre", label: "Sobre" },
   { id: "seguradoras", label: "Seguradoras Parceiras" },
+  { id: "sobre", label: "Sobre" },
   { id: "contato", label: "Contato" },
 ];
 
@@ -60,13 +60,14 @@ export function Header() {
                 e.preventDefault();
                 goTo(item.id);
               }}
-              className="relative py-1.5 text-[14.5px] font-semibold text-ink-800 transition-colors hover:text-brand-800"
+              className={`relative py-1.5 text-[14.5px] font-semibold text-ink-800 transition-colors hover:text-brand-800`}
+              style={{ color: `${active === item.id ? "#2E90E0" : "inherit"}` }}
             >
               {item.label}
-              <span
+              {/* <span
                 className="absolute inset-x-0 -bottom-0.5 h-0.5 origin-left rounded-full bg-brand-600 transition-transform duration-300 ease-[cubic-bezier(.22,.7,.3,1)]"
                 style={{ transform: `scaleX(${active === item.id ? 1 : 0})` }}
-              />
+              /> */}
             </a>
           ))}
           <a

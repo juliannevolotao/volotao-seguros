@@ -21,7 +21,9 @@ export function Footer() {
     <footer className="bg-navy-900 text-navy-100">
       <div className="mx-auto grid max-w-[1180px] grid-cols-[repeat(auto-fit,minmax(230px,1fr))] gap-8 px-5 pb-7 pt-[clamp(40px,5vw,60px)]">
         <div>
-          <Logo variant="dark" />
+          {/* <Logo variant="dark" /> */}
+          
+          <img src="/images/logo-branco.png" alt="Volotão Seguros Logo" className="w-48" />
           <p className="mt-[18px] max-w-[280px] text-sm leading-relaxed text-navy-200">
             Mais de {siteConfig.yearsInMarket} anos intermediando seguros e consórcios com
             atendimento próximo e transparente.
