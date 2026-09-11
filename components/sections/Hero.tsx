@@ -1,5 +1,6 @@
 import { Icon } from "@/components/ui/Icon";
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
+import { Reveal } from "@/components/ui/Reveal";
 import { siteConfig, waLink } from "@/lib/site-config";
 
 const TRUST_ITEMS = ["Cotação em até 24h", "Atendimento humano", "Assessoria em sinistros"];
@@ -30,7 +31,7 @@ export function Hero() {
         className="border-b border-ink-100 bg-gradient-to-b from-brand-50 to-white"
       >
         <div className="mx-auto grid max-w-[1180px] grid-cols-1 items-center gap-10 px-5 py-[clamp(40px,7vw,88px)] sm:gap-14 lg:grid-cols-2 lg:gap-16">
-          <div>
+          <Reveal>
             <span className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-brand-100 px-3.5 py-2 text-[12.5px] font-bold tracking-[.08em] text-brand-800">
               <Icon name="shield" size={14} strokeWidth={2.2} />
               +{siteConfig.yearsInMarket} ANOS DE MERCADO
@@ -71,9 +72,9 @@ export function Hero() {
                 </span>
               ))}
             </div>
-          </div>
+          </Reveal>
 
-          <div>
+          <Reveal delay={150}>
             <div className="relative">
               <PlaceholderImage label="foto institucional — família / escritório" aspect="aspect-[4/3]" />
               <div className="absolute -bottom-[18px] -left-2 hidden max-w-[calc(100%+8px)] gap-[18px] rounded-2xl border border-ink-200 bg-white p-4 px-5 shadow-stats sm:flex">
@@ -83,7 +84,7 @@ export function Hero() {
             <div className="mt-3.5 flex items-center justify-between gap-3 rounded-2xl border border-ink-200 bg-white p-4 text-center sm:hidden">
               <HeroStats />
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
