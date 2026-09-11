@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { Icon } from "@/components/ui/Icon";
-import { Logo } from "@/components/ui/Logo";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { useScrollProgress } from "@/hooks/useScrollProgress";
 import { scrollToId } from "@/lib/scroll";
@@ -48,7 +47,6 @@ export function Header() {
           }}
           className="flex items-center gap-2.5"
         >
-          {/* <Logo /> */}
           <img src="/images/logo.png" alt="Volotão Seguros Logo" className="w-48" />
         </a>
 
