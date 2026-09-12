@@ -5,7 +5,7 @@ export const siteConfig = {
   yearsInMarket: 15,
   whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "5513974076020",
   contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "fabiano@volotaoseguros.com.br",
-  phones: ["(13) 97407-6020", "(00) 00000-0000"],
+  phones: ["(13) 97407-6020"],
   address: {
     line1: "R. Benjamin Constant, 61",
     line2: "Centro, São Vicente - SP, 11310-500",
