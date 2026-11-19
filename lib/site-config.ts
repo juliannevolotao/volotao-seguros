@@ -17,14 +17,14 @@ export const siteConfig = {
     linkedin: "#",
   },
   insurers: [
-    "Porto Seguro",
-    "Bradesco Seguros",
-    "Mapfre",
-    "SulAmérica",
-    "Allianz",
-    "Tokio Marine",
-    "HDI Seguros",
-    "Azul Seguros",
+    { name: "Porto Seguro", logo: "/images/insurers/porto-seguro.png", width: 447, height: 135 },
+    { name: "Bradesco Seguros", logo: "/images/insurers/bradesco-seguros.webp", width: 567, height: 201 },
+    { name: "Mapfre" },
+    { name: "SulAmérica" },
+    { name: "Allianz", logo: "/images/insurers/allianz.webp", width: 1500, height: 372 },
+    { name: "Tokio Marine", logo: "/images/insurers/tokio-marine.jpg", width: 601, height: 185 },
+    { name: "HDI Seguros", logo: "/images/insurers/hdi-seguros.webp", width: 311, height: 192 },
+    { name: "Azul Seguros", logo: "/images/insurers/azul-seguros.svg", width: 500, height: 307 },
   ],
   stats: {
     hero: [

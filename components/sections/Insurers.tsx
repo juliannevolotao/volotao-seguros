@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Reveal } from "@/components/ui/Reveal";
 import { siteConfig } from "@/lib/site-config";
 
@@ -17,18 +18,27 @@ export function Insurers() {
         <div className="mt-[34px] grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-3">
           {siteConfig.insurers.map((insurer, i) => (
             <Reveal
-              key={insurer}
+              key={insurer.name}
               delay={(i % 6) * 60}
               y={14}
-              className="flex h-20 items-center justify-center rounded-xl border border-ink-200 bg-white px-3.5 text-center text-[14.5px] font-bold tracking-wide text-ink-500"
+              className="flex h-20 items-center justify-center rounded-xl border border-ink-200 bg-white px-5"
             >
-              {insurer}
+              {insurer.logo ? (
+                <Image
+                  src={insurer.logo}
+                  alt={insurer.name}
+                  width={insurer.width}
+                  height={insurer.height}
+                  className="h-10 w-auto max-w-full object-contain"
+                />
+              ) : (
+                <span className="text-center text-[14.5px] font-bold tracking-wide text-ink-500">
+                  {insurer.name}
+                </span>
+              )}
             </Reveal>
           ))}
         </div>
-        <p className="mt-5 font-mono text-xs text-ink-400">
-          substituir pelos logos oficiais das seguradoras parceiras
-        </p>
       </div>
     </section>
   );
